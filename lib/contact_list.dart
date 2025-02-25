@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_demo/add_contact.dart';
+import 'package:provider_demo/change_theme_provider.dart';
 import 'package:provider_demo/contact_list_provider.dart';
 import 'package:provider_demo/update_contact.dart';
 
@@ -13,6 +14,14 @@ class ContactList extends StatelessWidget {
       appBar: AppBar(
         title: Text('Contact List'),
         centerTitle: true,
+        actions: [
+          Consumer<ChangeThemeProvider>(builder: (_, provider, __) {
+            bool isDark = provider.getThemeMode;
+            return Switch(
+                value: isDark,
+                onChanged: (value) => provider.changeThemeMode(value));
+          })
+        ],
       ),
       body: Consumer<ContactListProvider>(builder: (_, provider, __) {
         List<Map<String, dynamic>> contactData = provider.getData();
